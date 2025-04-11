@@ -1,9 +1,13 @@
-public class Person {
+class Person {
     private String name;
+    private String address;
+    private String phone;
     private String personID;
 
-    public Person(String name, String personID) {
+    public Person(String name, String address, String phone, String personID) {
         this.name = name;
+        this.address = address;
+        this.phone = phone;
         this.personID = personID;
     }
 
@@ -11,13 +15,26 @@ public class Person {
         return name;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     public String getPersonID() {
         return personID;
     }
 
-    public String whoYouAre(){
-        return "Ben bir kisiyim ve adim" + this.name + " ve ID'm:" + this.personID;
+    public void display() {
+        System.out.println("Ad: " + name);
+        System.out.println("Adres: " + address);
+        System.out.println("Telefon: " + phone);
+        System.out.println("ID: " + personID);
     }
 
-
+    public String whoYouAre() {
+        return "Ben bir kişiyim.";
+    }
 }

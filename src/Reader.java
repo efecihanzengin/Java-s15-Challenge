@@ -1,49 +1,50 @@
-
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Reader extends Person{
+class Reader extends Person {
+    private String personID;
+    private List<Book> borrowedBooks; // Ödünç alınan kitapları tutacak liste
 
-    private List<Book> books;
-
-    public Reader(String name, String personID) {
-        super(name, personID);
-        this.books = new LinkedList<>();
+    public Reader(String name, String address, String phone, String personID) {
+        super(name, address, phone, personID); // Person sınıfına tüm bilgileri gönderiyoruz
+        this.personID = personID;
+        this.borrowedBooks = new ArrayList<>(); // Listeyi başlat
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public String getPersonID() {
+        return personID;
     }
 
-    public void purchase_book() {
-        System.out.println(getName() + " adlı okuyucu kitap satın aldı (bu özellik henüz tam olarak uygulanmadı).");
-        // Tipik bir kütüphane sisteminde okuyucular kitap ödünç alırlar, satın almazlar.
-        // Bu metot gereksinimlere göre tekrar değerlendirilebilir.
+    public List<Book> getBorrowedBooks() {
+        return borrowedBooks;
     }
 
-    public void borrow_book(Book book) {
-        // Kitap ödünç alma işleminin detayları daha sonra eklenecek
-        System.out.println(getName() + " adlı okuyucu " + book.getName() + " adlı kitabı ödünç almak istiyor.");
+    public void borrowBook(Book book) {
+        this.borrowedBooks.add(book);
+        System.out.println(book.getName() + " adlı kitap ödünç alındı.");
     }
 
-    public void return_book(Book book) {
-        // Kitap iade etme işleminin detayları daha sonra eklenecek
-        System.out.println(getName() + " adlı okuyucu " + book.getName() + " adlı kitabı iade etmek istiyor.");
+    public void returnBook(Book book) {
+        this.borrowedBooks.remove(book);
+        System.out.println(book.getName() + " adlı kitap iade edildi.");
     }
 
-    public void show_book() {
+    public void showBorrowedBooks() {
         System.out.println(getName() + " adlı okuyucunun ödünç aldığı kitaplar:");
-        if (books.isEmpty()) {
-            System.out.println("Henüz kitap ödünç almamış.");
+        if (borrowedBooks.isEmpty()) {
+            System.out.println("Henüz kitap ödünç almadı.");
         } else {
-            for (Book book : books) {
-                System.out.println("- " + book.getName());
+            for (Book book : borrowedBooks) {
+                book.display();
+                System.out.println("---");
             }
         }
     }
 
     @Override
-    public String whoYouAre() {
-        return "Ben bir okuyucuyum ve adım " + getName() + ". ID: " + getPersonID();
+    public void display() {
+        super.display(); // Önce Person sınıfının display metodunu çağır
+        System.out.println("Okuyucu ID: " + personID); // Reader'a özel bilgileri ekle
+        showBorrowedBooks();
     }
 }
